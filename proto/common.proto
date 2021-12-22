@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package api.pb;
+
+option go_package = "api/pb";
+
+import public "include/google/protobuf/timestamp.proto";
+import public "include/google/protobuf/empty.proto";
+
+message HealthMessage{
+  string version = 1;
+  google.protobuf.Timestamp time = 3;
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "api/pb";
+
+import "common.proto";
+import "clock.proto";
+
+service MasterService {
+  rpc Health(google.protobuf.Empty) returns (pb.HealthMessage) {
+  }
+
+  rpc Tick(google.protobuf.Empty) returns (stream pb.Tick) {
+  }
+}
