@@ -13,6 +13,7 @@ run:
 		CGO_ENABLED=0 $(GO_Config) go run -tags release -o bin/app cmd/main.go
 pb:
 		bash ./proto/build_go.sh
+		bash ./proto/build_doc.sh
 
 tidy:
 		go mod tidy

@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"log"
 	"net"
 
@@ -9,6 +10,9 @@ import (
 	pb "cmd/main.go/proto/generated_go"
 	"cmd/main.go/service"
 )
+
+//go:embed generated_doc.swagger.json
+var swaggerJSON string
 
 func main() {
 	lis, err := net.Listen("tcp", "localhost:9876")
