@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/elvizlai/protoc-extension/api";
+
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/field_mask.proto";
+
+extend google.protobuf.ServiceOptions {
+  ServiceDescriptor svc = 20220301;
+}
+
+message ServiceDescriptor {
+  // string addr = 1;
+}
+
+extend google.protobuf.MethodOptions {
+  // An annotation that describes a resource definition.
+  //
+  // Example:
+  //
+  //    message AAAService {
+  //      rpc MethodBBB(MethodBBBReq) returns (MethodBBBResp) {
+  //        option (api.resource) = {
+  //          in: {log_mask: {paths: ["/path/to/log"]}};
+  //        };
+  //      };
+  //    }
+  ResourceDescriptor resource = 20220302;
+}
+
+message ResourceDescriptor {
+  message In {
+    google.protobuf.FieldMask log_mask = 1;
+  }
+
+  message Out {
+    google.protobuf.FieldMask log_mask = 1;
+  }
+
+  In  in  = 1;
+  Out out = 2;
+}

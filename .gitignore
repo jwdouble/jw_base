@@ -18,4 +18,4 @@
 .vscode
 bin
 proto/generated_go
-proto/include/
+
