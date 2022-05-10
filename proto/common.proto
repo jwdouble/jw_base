@@ -12,3 +12,4 @@ message HealthMessage{
   string version = 1;
   google.protobuf.Timestamp time = 3;
 }
+

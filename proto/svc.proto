@@ -13,7 +13,7 @@ import "clock.proto";
 service MasterService {
   rpc Health(google.protobuf.Empty) returns (pb.HealthMessage) {
     option (google.api.http) = {
-      get:"/base/health"
+      get:"/health"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags:"base"

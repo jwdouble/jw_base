@@ -15,6 +15,7 @@ import (
 var swaggerJSON string
 
 func main() {
+	log.Println("jw-base start run")
 	lis, err := net.Listen("tcp", "localhost:9876")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

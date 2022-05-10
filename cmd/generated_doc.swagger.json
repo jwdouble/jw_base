@@ -16,28 +16,6 @@
     "application/json"
   ],
   "paths": {
-    "/base/health": {
-      "get": {
-        "operationId": "MasterService_Health",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/pbHealthMessage"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "base"
-        ]
-      }
-    },
     "/base/tick": {
       "post": {
         "operationId": "MasterService_Tick",
@@ -74,6 +52,28 @@
             }
           }
         ],
+        "tags": [
+          "base"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "MasterService_Health",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbHealthMessage"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
         "tags": [
           "base"
         ]
