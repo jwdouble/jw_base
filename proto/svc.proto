@@ -1,34 +1,25 @@
 syntax = "proto3";
 
-package api;
+package api.pb;
 
 option go_package = "api/pb";
 
 import "google/api/annotations.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 
 import "common.proto";
-import "clock.proto";
+import "jwt.proto";
 
-service MasterService {
+service BaseService {
   rpc Health(google.protobuf.Empty) returns (pb.HealthMessage) {
     option (google.api.http) = {
-      get:"/health"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags:"base"
-      description:""
+      get: "/health"
     };
   }
 
-  rpc Tick(google.protobuf.Empty) returns (stream pb.Tick) {
+  rpc ParseJwt(pb.ParseJwtReq) returns (pb.ParseJwtResp) {
     option (google.api.http) = {
-      post:"/base/tick"
-      body:"*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags:"base"
-      description:""
+      post: "/base/tool/jwt/parse"
+      body: "*"
     };
   }
 }

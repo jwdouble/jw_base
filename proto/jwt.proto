@@ -4,7 +4,7 @@ package api.pb;
 
 option go_package = "api/pb";
 
-import public "common.proto";
+import "common.proto";
 
 message ParseJwtReq {
   string jwt = 1;

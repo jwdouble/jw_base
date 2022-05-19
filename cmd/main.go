@@ -1,9 +1,12 @@
 package main
 
 import (
+	"context"
 	_ "embed"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"log"
 	"net"
+	"net/http"
 
 	"google.golang.org/grpc"
 
@@ -16,16 +19,11 @@ var swaggerJSON string
 
 func main() {
 	log.Println("jw-base start run")
-	lis, err := net.Listen("tcp", "localhost:9876")
+	lis, err := net.Listen("tcp", "localhost:8080")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	s := grpc.NewServer()
-	pb.RegisterMasterServiceServer(s, &service.MasterService{})
+	http.
 
-	err = s.Serve(lis)
-	if err != nil {
-		log.Fatal("server err:", err)
-	}
 }
