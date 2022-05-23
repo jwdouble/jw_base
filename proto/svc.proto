@@ -8,6 +8,7 @@ import "google/api/annotations.proto";
 
 import "common.proto";
 import "jwt.proto";
+import "json.proto";
 
 service BaseService {
   rpc Health(google.protobuf.Empty) returns (pb.HealthMessage) {
@@ -19,6 +20,13 @@ service BaseService {
   rpc ParseJwt(pb.ParseJwtReq) returns (pb.ParseJwtResp) {
     option (google.api.http) = {
       post: "/base/tool/jwt/parse"
+      body: "*"
+    };
+  }
+
+  rpc FormatJson(pb.FormatJsonReq) returns (pb.FormatJsonResp) {
+    option (google.api.http) = {
+      post: "/base/tool/json/format"
       body: "*"
     };
   }

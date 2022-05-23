@@ -11,5 +11,5 @@ message ParseJwtReq {
 }
 
 message ParseJwtResp {
-  google.protobuf.Struct data = 1;
+  google.protobuf.Struct claims = 1;
 }

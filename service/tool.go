@@ -5,25 +5,17 @@ import (
 	"context"
 	"fmt"
 	"github.com/golang-jwt/jwt"
+	"google.golang.org/protobuf/types/known/structpb"
 )
 
 func (s *BaseService) ParseJwt(ctx context.Context, req *pb.ParseJwtReq) (*pb.ParseJwtResp, error) {
 	var hmacSampleSecret []byte
-	//
-	//// sample token string taken from the New example
-	//tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJuYmYiOjE0NDQ0Nzg0MDB9.u1riaD1rW97opCoAuRCTy4w58Br-Zk-bh7vLiRIsrpU"
-	//
-	//// Parse takes the token string and a function for looking up the key. The latter is especially
-	//// useful if you use multiple keys for your application.  The standard is to use 'kid' in the
-	//// head of the token to identify which key to use, but the parsed token (head and claims) is provided
-	//// to the callback, providing flexibility.
 	token, err := jwt.Parse(req.Jwt, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
 
-		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		return hmacSampleSecret, nil
 	})
 
@@ -34,9 +26,15 @@ func (s *BaseService) ParseJwt(ctx context.Context, req *pb.ParseJwtReq) (*pb.Pa
 	}
 
 	m := token.Claims.(jwt.MapClaims)
+
 	for k, v := range m {
 		fmt.Println(k, v)
 	}
 
-	return &pb.ParseJwtResp{}, nil
+	c, err := structpb.NewStruct(m)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.ParseJwtResp{Claims: c}, nil
 }

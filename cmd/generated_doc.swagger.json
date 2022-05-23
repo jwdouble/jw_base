@@ -16,6 +16,38 @@
     "application/json"
   ],
   "paths": {
+    "/base/tool/json/format": {
+      "post": {
+        "operationId": "BaseService_FormatJson",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbFormatJsonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbFormatJsonReq"
+            }
+          }
+        ],
+        "tags": [
+          "BaseService"
+        ]
+      }
+    },
     "/base/tool/jwt/parse": {
       "post": {
         "operationId": "BaseService_ParseJwt",
@@ -72,6 +104,22 @@
     }
   },
   "definitions": {
+    "pbFormatJsonReq": {
+      "type": "object",
+      "properties": {
+        "json": {
+          "type": "string"
+        }
+      }
+    },
+    "pbFormatJsonResp": {
+      "type": "object",
+      "properties": {
+        "json": {
+          "type": "string"
+        }
+      }
+    },
     "pbHealthMessage": {
       "type": "object",
       "properties": {
@@ -95,7 +143,7 @@
     "pbParseJwtResp": {
       "type": "object",
       "properties": {
-        "data": {
+        "claims": {
           "type": "object"
         }
       }

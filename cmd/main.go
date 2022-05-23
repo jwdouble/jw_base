@@ -33,7 +33,7 @@ func main() {
 	})
 
 	gwmux := runtime.NewServeMux()
-	dopts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
+	dopts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())} // insecure.NewCredentials() 默认安全模式
 	err := pb.RegisterBaseServiceHandlerFromEndpoint(context.Background(), gwmux, addr, dopts)
 	if err != nil {
 		panic(err)
@@ -59,6 +59,7 @@ func main() {
 	fmt.Println("exit")
 }
 
+// 选择合适的处理
 func grpcHandleFunc(grpcServer *grpc.Server, httpHandler http.Handler) http.Handler {
 	return h2c.NewHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.ProtoMajor == 2 && strings.Contains(r.Header.Get("Content-Type"), "application/grpc") {
