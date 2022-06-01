@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jw-pvc
+  namespace: jw
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2G
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jw-base
+  namespace: jw
+spec:
+  replicas: 1      #停用或启用某个dep的方法是把replicas设为0
+  selector:
+    matchLabels:
+      app: jw-base    # 用于用label匹配  xxx -l app=nginx-pod
+  template:
+    metadata:
+      labels:
+        app: jw-base
+    spec:
+      containers:
+        - name: jw-base
+          image: www.jwdouble.top:10443/k8s/jw-base:202206012053
+          ports:
+            - containerPort: 10000
+            - containerPort: 20000
+          volumeMounts:
+            - mountPath: /file/
+              name: tls
+            volumes:
+              - name: tls
+                persistentVolumeClaim:
+                  claimName: jw-pvc
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jw-base-svc
+  namespace: jw
+  labels:
+    name: jw-base-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 10000
+      targetPort: 10000
+    #      nodePort: 31000
+    - name: https
+      protocol: TCP
+      port: 20000
+      targetPort: 20000
+  selector:
+    app: jw-base

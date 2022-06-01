@@ -10,16 +10,17 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
 	"net"
 	"net/http"
+	_ "net/http/pprof"
 	"strings"
 )
 
 //go:embed generated_doc.swagger.json
 var swaggerJSON string
 
-const addr = "localhost:8081"
+const addr = ":10000"
 
 func main() {
 	fmt.Printf("Starting server on %s\n", addr)
@@ -33,8 +34,13 @@ func main() {
 	})
 
 	gwmux := runtime.NewServeMux()
-	dopts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())} // insecure.NewCredentials() 默认安全模式
-	err := pb.RegisterBaseServiceHandlerFromEndpoint(context.Background(), gwmux, addr, dopts)
+	tls, err := credentials.NewServerTLSFromFile("/file/tls/tls.crt", "/file/tls/tls.key")
+	if err != nil {
+		panic(err)
+	}
+
+	dopts := []grpc.DialOption{grpc.WithTransportCredentials(tls)} // insecure.NewCredentials() 默认安全模式
+	err = pb.RegisterBaseServiceHandlerFromEndpoint(context.Background(), gwmux, addr, dopts)
 	if err != nil {
 		panic(err)
 	}
