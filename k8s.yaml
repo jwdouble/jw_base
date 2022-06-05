@@ -1,16 +1,39 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jw-base-pv
+  namespace: jw
+spec:
+  storageClassName: local-storage
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 2G
+  local:
+    path: /data/jw-base
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - jw
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jw-pvc
+  name: jw-base-pvc
   namespace: jw
 spec:
   storageClassName: local-storage
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 2G
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,18 +51,18 @@ spec:
         app: jw-base
     spec:
       containers:
-        - name: jw-base
-          image: www.jwdouble.top:10443/k8s/jw-base:202206012053
-          ports:
-            - containerPort: 10000
-            - containerPort: 20000
-          volumeMounts:
-            - mountPath: /file/
-              name: tls
-            volumes:
-              - name: tls
-                persistentVolumeClaim:
-                  claimName: jw-pvc
+      - name: jw-base
+        image: www.jwdouble.top:10443/k8s/jw-base:202206041514
+        ports:
+        - containerPort: 10000
+        - containerPort: 20000
+        volumeMounts:
+        - mountPath: static
+          name: jw-base-pv
+      volumes:
+      - name: jw-base-pv
+        persistentVolumeClaim:
+          claimName: jw-base-pvc
 
 
 ---
@@ -53,14 +76,13 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - name: http
-      protocol: TCP
-      port: 10000
-      targetPort: 10000
-    #      nodePort: 31000
-    - name: https
-      protocol: TCP
-      port: 20000
-      targetPort: 20000
+  - name: http
+    protocol: TCP
+    port: 10000
+    targetPort: 10000
+  - name: https
+    protocol: TCP
+    port: 20000
+    targetPort: 20000
   selector:
     app: jw-base
