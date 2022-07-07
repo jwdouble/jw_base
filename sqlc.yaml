@@ -1,7 +1,7 @@
 version: 1
 packages:
-  - path: "tutorial"
-    name: "tutorial"
+  - path: "./sqlc/gen"
+    name: "gen"
     engine: "postgresql"
-    schema: "schema.sql"
-    queries: "query.sql"
+    schema: "./sqlc/schema"
+    queries: "./sqlc/query"

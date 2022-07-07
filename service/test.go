@@ -1,16 +1,13 @@
 package service
 
 import (
-	"cmd/main.go/tutorial"
+	"cmd/main.go/sqlc"
+	"cmd/main.go/sqlc/gen"
 	"context"
-	"jw.lib/sqlx"
 )
 
-func CreateText(ctx context.Context, arg tutorial.CreateTextParams) error {
-	sqlx.Register(sqlx.DefaultSqlDriver, sqlx.DefaultSqlAddr)
-
-	DBQ := tutorial.New(sqlx.GetSqlOperator())
-	err := DBQ.CreateText(ctx, arg)
+func CreateText(ctx context.Context, arg gen.CreateTextParams) error {
+	err := sqlc.Q.CreateText(ctx, arg)
 	if err != nil {
 		return err
 	}
