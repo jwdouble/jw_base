@@ -8,6 +8,6 @@ import (
 func Test_migrate(t *testing.T) {
 	err := M.Up()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("err-->", err)
 	}
 }

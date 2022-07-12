@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cmd/main.go/sqlc"
 	"context"
 	"crypto/tls"
 	_ "embed"
@@ -63,6 +64,8 @@ func main() {
 		TLSConfig: getTLSConfig(),
 	}
 
+	sqlc.Register()
+
 	err = srv.Serve(conn)
 	if err != nil {
 		panic(err)
@@ -86,8 +89,8 @@ func grpcHandleFunc(grpcServer *grpc.Server, httpHandler http.Handler) http.Hand
 func getTLSConfig() *tls.Config {
 	pem, _ := os.ReadFile("/static/tls.pem")
 	key, _ := os.ReadFile("/static/tls.key")
-	logx.Info(string(pem))
-	logx.Info(string(key))
+	//logx.Info(string(pem))
+	//logx.Info(string(key))
 	cert, err := tls.X509KeyPair(pem, key)
 	if err != nil {
 		logx.Error("tls load err: %s", err)
