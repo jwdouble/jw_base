@@ -9,6 +9,7 @@ import "google/api/annotations.proto";
 import "common.proto";
 import "jwt.proto";
 import "json.proto";
+import "file.proto";
 
 service BaseService {
   rpc Health(google.protobuf.Empty) returns (pb.HealthMessage) {
@@ -27,6 +28,13 @@ service BaseService {
   rpc FormatJson(pb.FormatJsonReq) returns (pb.FormatJsonResp) {
     option (google.api.http) = {
       post: "/base/tool/json/format"
+      body: "*"
+    };
+  }
+
+  rpc StreamTest(stream pb.StreamTestReq) returns (pb.StreamTestResp) {
+    option (google.api.http) = {
+      post: "/base/file/test/stream"
       body: "*"
     };
   }

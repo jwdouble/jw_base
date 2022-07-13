@@ -16,6 +16,39 @@
     "application/json"
   ],
   "paths": {
+    "/base/file/test/stream": {
+      "post": {
+        "operationId": "BaseService_StreamTest",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbStreamTestResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbStreamTestReq"
+            }
+          }
+        ],
+        "tags": [
+          "BaseService"
+        ]
+      }
+    },
     "/base/tool/json/format": {
       "post": {
         "operationId": "BaseService_FormatJson",
@@ -145,6 +178,23 @@
       "properties": {
         "claims": {
           "type": "object"
+        }
+      }
+    },
+    "pbStreamTestReq": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "pbStreamTestResp": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string"
         }
       }
     },
