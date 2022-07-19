@@ -1,9 +1,10 @@
 package service
 
 import (
-	pb "cmd/main.go/proto/generated_go"
 	"io"
 	"log"
+
+	pb "cmd/main.go/proto/generated_go"
 )
 
 func (s *BaseService) StreamTest(srv pb.BaseService_StreamTestServer) error {
@@ -17,6 +18,6 @@ func (s *BaseService) StreamTest(srv pb.BaseService_StreamTestServer) error {
 		if err != nil {
 			return err
 		}
-		log.Println(res.Data)
+		log.Println("-->", res.Data)
 	}
 }

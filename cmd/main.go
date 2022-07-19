@@ -1,7 +1,6 @@
 package main
 
 import (
-	"cmd/main.go/sqlc"
 	"context"
 	"crypto/tls"
 	_ "embed"
@@ -12,11 +11,14 @@ import (
 	"os"
 	"strings"
 
+	"google.golang.org/grpc/credentials/insecure"
+
+	"cmd/main.go/sqlc"
+
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 	"jw.lib/logx"
 
 	pb "cmd/main.go/proto/generated_go"
@@ -26,14 +28,15 @@ import (
 const addr = ":10000"
 
 func main() {
+	// TODO: 把带不带证书做成配置
 	fmt.Printf("Starting server on %s\n", addr)
-	tls, err := credentials.NewServerTLSFromFile("/static/tls.pem", "/static/tls.key")
-	if err != nil {
-		panic(err)
-	}
-
-	grpcServer := grpc.NewServer(grpc.Creds(tls))
-	//grpcServer := grpc.NewServer()
+	//tls, err := credentials.NewServerTLSFromFile("/static/tls.pem", "/static/tls.key")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//grpcServer := grpc.NewServer(grpc.Creds(tls))
+	grpcServer := grpc.NewServer()
 	pb.RegisterBaseServiceServer(grpcServer, service.NewBaseService())
 
 	// 创建http路由和wg路由
@@ -44,9 +47,9 @@ func main() {
 
 	gwmux := runtime.NewServeMux()
 
-	dopts := []grpc.DialOption{grpc.WithTransportCredentials(tls)} // insecure.NewCredentials() 默认安全模式
-	//dopts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())} // insecure.NewCredentials() 默认安全模式
-	err = pb.RegisterBaseServiceHandlerFromEndpoint(context.Background(), gwmux, addr, dopts)
+	//dopts := []grpc.DialOption{grpc.WithTransportCredentials(tls)} // insecure.NewCredentials() 默认安全模式
+	dopts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())} // insecure.NewCredentials() 默认安全模式
+	err := pb.RegisterBaseServiceHandlerFromEndpoint(context.Background(), gwmux, addr, dopts)
 	if err != nil {
 		panic(err)
 	}
@@ -59,9 +62,9 @@ func main() {
 	}
 
 	srv := &http.Server{
-		Addr:      addr,
-		Handler:   grpcHandleFunc(grpcServer, mux),
-		TLSConfig: getTLSConfig(),
+		Addr:    addr,
+		Handler: grpcHandleFunc(grpcServer, mux),
+		//TLSConfig: getTLSConfig(),
 	}
 
 	sqlc.Register()
