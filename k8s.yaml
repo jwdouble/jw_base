@@ -52,10 +52,15 @@ spec:
     spec:
       containers:
       - name: jw-base
-        image: www.jwdouble.top:10443/k8s/jw-base:202206041514
+        image: www.jwdouble.top:10443/k8s/jw-base:202207191546
         ports:
         - containerPort: 10000
-        - containerPort: 20000
+        env:
+          - name: COMMON_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: jw-secret
+                key: common_password
         volumeMounts:
         - mountPath: static
           name: jw-base-pv

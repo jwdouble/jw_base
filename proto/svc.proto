@@ -10,6 +10,7 @@ import "common.proto";
 import "jwt.proto";
 import "json.proto";
 import "file.proto";
+import "running.proto";
 
 service BaseService {
   rpc Health(google.protobuf.Empty) returns (pb.HealthMessage) {
@@ -35,6 +36,13 @@ service BaseService {
   rpc StreamTest(stream pb.StreamTestReq) returns (pb.StreamTestResp) {
     option (google.api.http) = {
       post: "/base/file/test/stream"
+      body: "*"
+    };
+  }
+
+  rpc GetRunningEnv(pb.GetRunningEnvReq) returns (pb.GetRunningEnvResp) {
+    option (google.api.http) = {
+      post: "/base/running/env"
       body: "*"
     };
   }

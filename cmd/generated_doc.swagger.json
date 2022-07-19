@@ -49,6 +49,38 @@
         ]
       }
     },
+    "/base/running/env": {
+      "post": {
+        "operationId": "BaseService_GetRunningEnv",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetRunningEnvResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbGetRunningEnvReq"
+            }
+          }
+        ],
+        "tags": [
+          "BaseService"
+        ]
+      }
+    },
     "/base/tool/json/format": {
       "post": {
         "operationId": "BaseService_FormatJson",
@@ -149,6 +181,22 @@
       "type": "object",
       "properties": {
         "json": {
+          "type": "string"
+        }
+      }
+    },
+    "pbGetRunningEnvReq": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        }
+      }
+    },
+    "pbGetRunningEnvResp": {
+      "type": "object",
+      "properties": {
+        "value": {
           "type": "string"
         }
       }
