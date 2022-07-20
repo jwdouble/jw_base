@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
       - name: jw-base
-        image: www.jwdouble.top:10443/k8s/jw-base:202207191546
+        image: www.jwdouble.top:10443/k8s/jw-base:202207201626
         ports:
         - containerPort: 10000
         env:
@@ -68,7 +68,6 @@ spec:
       - name: jw-base-pv
         persistentVolumeClaim:
           claimName: jw-base-pvc
-
 
 ---
 apiVersion: v1

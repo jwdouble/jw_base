@@ -13,7 +13,7 @@ import (
 
 	"google.golang.org/grpc/credentials/insecure"
 
-	"cmd/main.go/sqlc"
+	"cmd/main.go/orm"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"golang.org/x/net/http2"
@@ -67,7 +67,7 @@ func main() {
 		//TLSConfig: getTLSConfig(),
 	}
 
-	sqlc.Register()
+	orm.Register()
 
 	err = srv.Serve(conn)
 	if err != nil {

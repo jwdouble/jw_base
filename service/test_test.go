@@ -1,10 +1,11 @@
 package service
 
 import (
-	"cmd/main.go/sqlc/gen"
 	"context"
 	"fmt"
 	"testing"
+
+	"cmd/main.go/orm/gen"
 )
 
 func TestCreateText(t *testing.T) {

@@ -1,4 +1,4 @@
-package sqlc
+package orm
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"jw.lib/logx"
 	"jw.lib/sqlx"
 
-	"cmd/main.go/sqlc/gen"
+	"cmd/main.go/orm/gen"
 )
 
 var Q *gen.Queries
@@ -27,7 +27,7 @@ func init() {
 		return
 	}
 
-	M, err = migrate.NewWithDatabaseInstance("file:///home/jw/files/self/jw_base/sqlc/migration", "postgres", di)
+	M, err = migrate.NewWithDatabaseInstance("file:///home/jw/files/self/jw_base/orm/migration", "postgres", di)
 	if err != nil {
 		logx.Error("migrate.NewWithDatabaseInstance", err)
 		return

@@ -1,13 +1,14 @@
 package service
 
 import (
-	"cmd/main.go/sqlc"
-	"cmd/main.go/sqlc/gen"
 	"context"
+
+	"cmd/main.go/orm"
+	"cmd/main.go/orm/gen"
 )
 
 func CreateText(ctx context.Context, arg gen.CreateTextParams) error {
-	err := sqlc.Q.CreateText(ctx, arg)
+	err := orm.Q.CreateText(ctx, arg)
 	if err != nil {
 		return err
 	}
