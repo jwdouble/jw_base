@@ -37,6 +37,8 @@ func init() {
 
 	fmt.Println(M.Version())
 
+	//  migrate -database "postgres://postgres:jw@150.158.7.96:5432/jwdouble?sslmode=disable" -path "/home/jw/files/self/jw_base/orm/migration" down
+
 	err = M.Up()
 	if err != nil {
 		fmt.Println("err-->", err)
