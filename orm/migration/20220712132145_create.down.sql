@@ -1,1 +1,1 @@
-drop test_migrate1;
+drop table test_migrate1;
