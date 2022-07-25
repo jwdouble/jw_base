@@ -5,6 +5,9 @@ metadata:
   namespace: jw
 spec:
   storageClassName: local-storage
+  claimRef:
+    name: jw-base-pvc
+    namespace: jw
   persistentVolumeReclaimPolicy: Retain
   volumeMode: Filesystem
   accessModes:
@@ -22,7 +25,7 @@ spec:
           values:
           - jw
 ---
-apiVersion: v1
+apiVersion: v1    #
 kind: PersistentVolumeClaim
 metadata:
   name: jw-base-pvc
@@ -52,9 +55,7 @@ spec:
     spec:
       containers:
       - name: jw-base
-        image: www.jwdouble.top:10443/k8s/jw-base:202207221634
-        ports:
-        - containerPort: 10000
+        image: www.jwdouble.top:10443/k8s/jw-base:202207251632
         env:
           - name: GO_SERVICE_PORT
             value: ":10000"
@@ -63,6 +64,8 @@ spec:
               configMapKeyRef:
                 name: jw-secret
                 key: common_password
+        ports:
+          - containerPort: 10000
         volumeMounts:
         - mountPath: static
           name: jw-base-pv
