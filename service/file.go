@@ -2,7 +2,8 @@ package service
 
 import (
 	"io"
-	"log"
+
+	"jw.lib/logx"
 
 	pb "cmd/main.go/proto/generated_go"
 )
@@ -18,6 +19,6 @@ func (s *BaseService) StreamTest(srv pb.BaseService_StreamTestServer) error {
 		if err != nil {
 			return err
 		}
-		log.Println("-->", res.Data)
+		logx.Infof("-->", res.Data)
 	}
 }

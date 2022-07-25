@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"cmd/main.go/orm/gen"
@@ -14,6 +13,6 @@ func TestCreateText(t *testing.T) {
 		T:  "hha",
 	})
 	if err != nil {
-		fmt.Println(err)
+		t.Log(err)
 	}
 }

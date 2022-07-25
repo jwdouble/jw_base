@@ -1,11 +1,14 @@
 package service
 
 import (
-	pb "cmd/main.go/proto/generated_go"
 	"context"
 	"fmt"
+
 	"github.com/golang-jwt/jwt"
 	"google.golang.org/protobuf/types/known/structpb"
+	"jw.lib/logx"
+
+	pb "cmd/main.go/proto/generated_go"
 )
 
 func (s *BaseService) ParseJwt(ctx context.Context, req *pb.ParseJwtReq) (*pb.ParseJwtResp, error) {
@@ -22,13 +25,13 @@ func (s *BaseService) ParseJwt(ctx context.Context, req *pb.ParseJwtReq) (*pb.Pa
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		fmt.Println(claims["foo"], claims["nbf"])
 	} else {
-		fmt.Println(err)
+		logx.Errorf(err, "jwt.Parse")
 	}
 
 	m := token.Claims.(jwt.MapClaims)
 
 	for k, v := range m {
-		fmt.Println(k, v)
+		logx.Infof("%s: %v", k, v)
 	}
 
 	c, err := structpb.NewStruct(m)
