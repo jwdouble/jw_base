@@ -52,11 +52,11 @@ spec:
     spec:
       containers:
       - name: jw-base
-        image: www.jwdouble.top:10443/k8s/jw-base:202207221122
+        image: www.jwdouble.top:10443/k8s/jw-base:202207221634
         ports:
         - containerPort: 10000
         env:
-          - name: SERVICE_PORT
+          - name: GO_SERVICE_PORT
             value: ":10000"
           - name: GO_COMMON_PASSWORD
             valueFrom:
