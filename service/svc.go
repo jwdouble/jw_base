@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	pb "cmd/main.go/proto/generated_go"
+	pb "jw_base/proto/generated_go"
 )
 
 type BaseService struct {

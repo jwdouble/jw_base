@@ -5,7 +5,7 @@ import (
 
 	"jw.lib/logx"
 
-	pb "cmd/main.go/proto/generated_go"
+	pb "jw_base/proto/generated_go"
 )
 
 func (s *BaseService) StreamTest(srv pb.BaseService_StreamTestServer) error {

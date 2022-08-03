@@ -8,7 +8,7 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 	"jw.lib/logx"
 
-	pb "cmd/main.go/proto/generated_go"
+	pb "jw_base/proto/generated_go"
 )
 
 func (s *BaseService) ParseJwt(ctx context.Context, req *pb.ParseJwtReq) (*pb.ParseJwtResp, error) {

@@ -8,7 +8,7 @@ import (
 	"jw.lib/logx"
 	"jw.lib/timex"
 
-	pb "cmd/main.go/proto/generated_go"
+	pb "jw_base/proto/generated_go"
 )
 
 func (s *BaseService) GetRunningEnv(ctx context.Context, in *pb.GetRunningEnvReq) (*pb.GetRunningEnvResp, error) {

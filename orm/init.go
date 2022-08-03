@@ -6,7 +6,7 @@ import (
 	"jw.lib/migrate"
 	"jw.lib/sqlx"
 
-	"cmd/main.go/orm/gen"
+	"jw_base/orm/gen"
 )
 
 //go:embed migration/*.sql

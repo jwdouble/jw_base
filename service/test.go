@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"cmd/main.go/orm"
-	"cmd/main.go/orm/gen"
+	"jw_base/orm"
+	"jw_base/orm/gen"
 )
 
 func CreateText(ctx context.Context, arg gen.CreateTextParams) error {

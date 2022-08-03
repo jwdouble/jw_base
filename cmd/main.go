@@ -11,8 +11,8 @@ import (
 
 	"jw.lib/logx"
 
-	pb "cmd/main.go/proto/generated_go"
-	"cmd/main.go/service"
+	pb "jw_base/proto/generated_go"
+	"jw_base/service"
 )
 
 func main() {
