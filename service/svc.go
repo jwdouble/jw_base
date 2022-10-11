@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"google.golang.org/protobuf/types/known/emptypb"
+	"jw.lib/logx"
 
 	pb "jw_base/proto/generated_go"
 )
@@ -18,6 +19,7 @@ func NewBaseService() *BaseService {
 }
 
 func (s *BaseService) Health(context.Context, *emptypb.Empty) (*pb.HealthMessage, error) {
+	logx.Infof("health check")
 	return &pb.HealthMessage{Version: "v1", Time: TimestampNow()}, nil
 }
 

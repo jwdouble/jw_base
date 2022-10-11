@@ -18,11 +18,11 @@ import (
 func main() {
 	logx.KV("app", "jw-base")
 
-	logx.Infof("server start, list port %s", conf.SERVER_PORT.Value(":10000"))
-	s := rpcx.New(conf.SERVER_PORT.Value(":10000"), func(grpcServer *grpc.Server, gwmux *runtime.ServeMux, dopts []grpc.DialOption) {
+	logx.Infof("server start, listen port %s", conf.SERVER_PORT.Value(":30001"))
+	s := rpcx.New(conf.SERVER_PORT.Value(":30001"), func(grpcServer *grpc.Server, gwmux *runtime.ServeMux, dopts []grpc.DialOption) {
 		pb.RegisterBaseServiceServer(grpcServer, service.NewBaseService())
 
-		err := pb.RegisterBaseServiceHandlerFromEndpoint(context.Background(), gwmux, conf.SERVER_PORT.Value(":10000"), dopts)
+		err := pb.RegisterBaseServiceHandlerFromEndpoint(context.Background(), gwmux, conf.SERVER_PORT.Value(":30001"), dopts)
 		if err != nil {
 			logx.Errorf(err, "pb.RegisterBaseServiceHandlerFromEndpoint")
 		}

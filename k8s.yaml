@@ -55,17 +55,17 @@ spec:
     spec:
       containers:
       - name: jw-base
-        image: www.jwdouble.top:10443/k8s/jw-base:202207251632
+        image: www.jwdouble.top:10443/k8s/jw-base:202210101453
         env:
           - name: GO_SERVICE_PORT
-            value: ":10000"
+            value: ":30001"
           - name: GO_COMMON_PASSWORD
             valueFrom:
               configMapKeyRef:
                 name: jw-secret
                 key: common_password
         ports:
-          - containerPort: 10000
+          - containerPort: 30001
         volumeMounts:
         - mountPath: static
           name: jw-base-pv
@@ -87,11 +87,8 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    port: 10000
-    targetPort: 10000
-  - name: https
-    protocol: TCP
-    port: 20000
-    targetPort: 20000
+    port: 30001          # pod端口
+    targetPort: 30001       # 容器端口
+    #  nodePort: 30080      # 对外端口 (通过envoy对外暴露)
   selector:
     app: jw-base
